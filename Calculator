@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Area & Cost Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background-color: #f5f5f5;
+        padding: 15px;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        color: #2563eb;
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .section-title {
+        color: #374151;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 5px;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #374151;
+        font-size: 14px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #2563eb;
+    }
+
+    .result {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .result.cost {
+        background: linear-gradient(135deg, #059669, #047857);
+    }
+
+    .result.total {
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .result h3 {
+        font-size: 14px;
+        opacity: 0.9;
+        margin-bottom: 5px;
+    }
+
+    .result .value {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .result.total .value {
+        font-size: 28px;
+    }
+
+    .info {
+        background: #eff6ff;
+        border: 1px solid #dbeafe;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .info h3 {
+        color: #1d4ed8;
+        margin-bottom: 10px;
+    }
+
+    .info ul {
+        color: #1e40af;
+        margin-left: 20px;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🏠 House Calculator</h1>
+
+```
+        <div class="section-title">House Dimensions</div>
+
+        <div class="input-group">
+            <label for="width">House Width (feet)</label>
+            <input type="number" id="width" value="40" min="1">
+        </div>
+
+        <div class="input-group">
+            <label for="length">House Length (feet)</label>
+            <input type="number" id="length" value="50" min="1">
+        </div>
+
+        <div class="input-group">
+            <label for="wallHeight">Wall Height (feet)</label>
+            <input type="number" id="wallHeight" value="9" min="1">
+        </div>
+
+        <div class="input-group">
+            <label for="roofPitch">Roof Pitch (rise per 12")</label>
+            <input type="number" id="roofPitch" value="6" min="1" step="0.5">
+        </div>
+
+        <div class="input-group">
+            <label for="overhang">Roof Overhang (feet)</label>
+            <input type="number" id="overhang" value="1" min="0" step="0.5">
+        </div>
+
+        <div class="section-title">Pricing</div>
+
+        <div class="input-group">
+            <label for="wallPrice">Wall Panel Price ($ per sq ft)</label>
+            <input type="number" id="wallPrice" value="15.00" min="0" step="0.01">
+        </div>
+
+        <div class="input-group">
+            <label for="roofPrice">Roof Panel Price ($ per sq ft)</label>
+            <input type="number" id="roofPrice" value="12.00" min="0" step="0.01">
+        </div>
+
+        <div class="input-group">
+            <label for="connectionPercent">Connection Systems (%)</label>
+            <input type="number" id="connectionPercent" value="15" min="0" max="100">
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Areas</div>
+
+        <div class="result">
+            <h3>House Footprint</h3>
+            <div class="value" id="footprint">2,000 sq ft</div>
+        </div>
+
+        <div class="result">
+            <h3>Total Wall Area</h3>
+            <div class="value" id="wallArea">2,020 sq ft</div>
+        </div>
+
+        <div class="result">
+            <h3>Total Roof Area</h3>
+            <div class="value" id="roofArea">2,429 sq ft</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Costs</div>
+
+        <div class="result cost">
+            <h3>Wall Panel Cost</h3>
+            <div class="value" id="wallCost">$30,300</div>
+        </div>
+
+        <div class="result cost">
+            <h3>Roof Panel Cost</h3>
+            <div class="value" id="roofCost">$29,148</div>
+        </div>
+
+        <div class="result cost">
+            <h3>Subtotal</h3>
+            <div class="value" id="subtotal">$59,448</div>
+        </div>
+
+        <div class="result cost">
+            <h3>Connection Systems</h3>
+            <div class="value" id="connectionCost">$8,917</div>
+        </div>
+
+        <div class="result total">
+            <h3>TOTAL PROJECT COST</h3>
+            <div class="value" id="totalCost">$68,365</div>
+        </div>
+    </div>
+
+    <div class="info">
+        <h3>📋 How it works:</h3>
+        <ul>
+            <li>Calculates wall area including gable triangles</li>
+            <li>Accounts for roof pitch and overhang</li>
+            <li>Multiplies areas by your panel prices</li>
+            <li>Adds connection system percentage</li>
+            <li>Updates automatically as you type</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    function calculateAll() {
+        // Get input values
+        const width = parseFloat(document.getElementById('width').value) || 0;
+        const length = parseFloat(document.getElementById('length').value) || 0;
+        const wallHeight = parseFloat(document.getElementById('wallHeight').value) || 0;
+        const roofPitch = parseFloat(document.getElementById('roofPitch').value) || 0;
+        const overhang = parseFloat(document.getElementById('overhang').value) || 0;
+        const wallPrice = parseFloat(document.getElementById('wallPrice').value) || 0;
+        const roofPrice = parseFloat(document.getElementById('roofPrice').value) || 0;
+        const connectionPercent = parseFloat(document.getElementById('connectionPercent').value) || 0;
+
+        // Calculate areas
+        const footprint = width * length;
+
+        // Wall calculations
+        const frontBackWalls = 2 * (width * wallHeight);
+        const sideWalls = 2 * (length * wallHeight);
+
+        // Gable triangles
+        const risePerFoot = roofPitch / 12;
+        const peakRise = (width / 2) * risePerFoot;
+        const triangleArea = 0.5 * width * peakRise;
+        const totalTriangles = 2 * triangleArea;
+
+        const wallArea = frontBackWalls + sideWalls + totalTriangles;
+
+        // Roof calculations
+        const horizontalToRidge = width / 2;
+        const slopeLength = Math.sqrt(Math.pow(horizontalToRidge, 2) + Math.pow(peakRise, 2));
+        const roofPanelLength = length + (2 * overhang);
+        const roofPanelWidth = slopeLength + overhang;
+        const roofArea = 2 * (roofPanelLength * roofPanelWidth);
+
+        // Cost calculations
+        const wallCost = wallArea * wallPrice;
+        const roofCost = roofArea * roofPrice;
+        const subtotal = wallCost + roofCost;
+        const connectionCost = subtotal * (connectionPercent / 100);
+        const totalCost = subtotal + connectionCost;
+
+        // Update display
+        document.getElementById('footprint').textContent = Math.round(footprint).toLocaleString() + ' sq ft';
+        document.getElementById('wallArea').textContent = Math.round(wallArea).toLocaleString() + ' sq ft';
+        document.getElementById('roofArea').textContent = Math.round(roofArea).toLocaleString() + ' sq ft';
+        document.getElementById('wallCost').textContent = '$' + Math.round(wallCost).toLocaleString();
+        document.getElementById('roofCost').textContent = '$' + Math.round(roofCost).toLocaleString();
+        document.getElementById('subtotal').textContent = '$' + Math.round(subtotal).toLocaleString();
+        document.getElementById('connectionCost').textContent = '$' + Math.round(connectionCost).toLocaleString();
+        document.getElementById('totalCost').textContent = '$' + Math.round(totalCost).toLocaleString();
+    }
+
+    // Add event listeners to all inputs
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', calculateAll);
+        });
+
+        // Initial calculation
+        calculateAll();
+    });
+</script>
+```
+
+</body>
+</html>
